@@ -12,14 +12,21 @@ class OnboardModel {
       required this.title,
       required this.imageUrl});
 
-  OnboardModel fromDocumentSnapshot(DocumentSnapshot snapshot) {
-    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-    return OnboardModel(
-        onboard: data['onboard'],
-        header: data['header'],
-        title: data['title'],
-        imageUrl: data['imageUrl']);
-  }
+  // static OnboardModel fromDocumentSnapshot(DocumentSnapshot snapshot) {
+  //   Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+  //   return OnboardModel(
+  //       onboard: data['onboard'],
+  //       header: data['header'],
+  //       title: data['title'],
+  //       imageUrl: data['imageUrl']);
+  // }
+
+  OnboardModel.fromJson(Map<String,dynamic> json) :
+    onboard = json['onboard'],
+    header = json['header'],
+    title = json['title'],
+    imageUrl =  json['imageUrl'];
+
 
   Map<String, dynamic> toJson() => {
         'onboard': onboard,

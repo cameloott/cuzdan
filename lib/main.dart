@@ -1,3 +1,5 @@
+import 'package:cuzdan/models/onboard_model.dart';
+import 'package:cuzdan/service/firestore_service.dart';
 import 'package:cuzdan/service/initilization.dart';
 import 'package:cuzdan/core/constant/app/app_constants.dart';
 import 'package:cuzdan/core/init/language/language_manager.dart';
@@ -18,6 +20,8 @@ void main() async {
   PreferencesManager.preferencesInit();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
+  // FirestoreService _service = FirestoreService();
+  // List<OnboardModel> onboardModelList = await _service.getOnboardData();
 
   runApp(
     MultiProvider(
