@@ -11,11 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'core/init/navigation/navigation_route.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   PreferencesManager.preferencesInit();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp();
 
   runApp(
     MultiProvider(
