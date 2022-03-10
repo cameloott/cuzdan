@@ -20,15 +20,7 @@ void main() async {
   PreferencesManager.preferencesInit();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
-  FirestoreService _service = FirestoreService();
-  List<OnboardModel> onboardModelList = await _service.getOnboardData();
-  for (var i = 0; i < onboardModelList.length; i++) {
-    print(onboardModelList[i].header);
-    print(onboardModelList[i].onboard);
-    print(onboardModelList[i].imageUrl);
-    print(onboardModelList[i].title);
-  }
-
+  // onboardDataControl();
 
   runApp(
     MultiProvider(
@@ -41,6 +33,16 @@ void main() async {
     ),
   );
 }
+// void onboardDataControl() async{
+//   FirestoreService _service = FirestoreService();
+//   List<OnboardModel> onboardModelList = await _service.getOnboardData();
+//   for (var i = 0; i < onboardModelList.length; i++) {
+//     print(onboardModelList[i].header);
+//     print(onboardModelList[i].onboard);
+//     print(onboardModelList[i].imageUrl);
+//     print(onboardModelList[i].title);
+//   }
+// }
 
 
 class MyApp extends StatelessWidget {
