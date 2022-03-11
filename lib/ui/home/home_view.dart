@@ -1,4 +1,4 @@
-import 'package:cuzdan/core/base/state/base_state.dart';
+import '../../core/base/state/base_state.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {

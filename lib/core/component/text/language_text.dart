@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cuzdan/core/extension/string_extension.dart';
+import '../../extension/string_extension.dart';
 
 class LanguageText extends StatelessWidget {
   final String title;
@@ -8,7 +8,15 @@ class LanguageText extends StatelessWidget {
   final TextAlign? textAlign;
   final TextOverflow? overflow;
   final int? maxLines;
-  const LanguageText({Key? key, required this.title, this.type, this.style, this.textAlign, this.overflow, this.maxLines}) : super(key: key);
+  const LanguageText(
+      {Key? key,
+      required this.title,
+      this.type,
+      this.style,
+      this.textAlign,
+      this.overflow,
+      this.maxLines})
+      : super(key: key);
 
   String textDesigner() {
     return type == 'upper'
@@ -20,7 +28,11 @@ class LanguageText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(textDesigner(), style: style, textAlign: textAlign, overflow: overflow, maxLines: maxLines);
+    return Text(textDesigner(),
+        style: style,
+        textAlign: textAlign,
+        overflow: overflow,
+        maxLines: maxLines);
   }
 }
 
@@ -29,7 +41,9 @@ class MultilineLanguageText extends StatelessWidget {
   final String? type;
   final TextStyle? style;
   final TextAlign? textAlign;
-  const MultilineLanguageText({Key? key, required this.title, this.type, this.style, this.textAlign}) : super(key: key);
+  const MultilineLanguageText(
+      {Key? key, required this.title, this.type, this.style, this.textAlign})
+      : super(key: key);
 
   String textDesigner() {
     return type == 'upper'
@@ -41,6 +55,7 @@ class MultilineLanguageText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(textDesigner().replaceAll(' ', '\n'), style: style, textAlign: textAlign);
+    return Text(textDesigner().replaceAll(' ', '\n'),
+        style: style, textAlign: textAlign);
   }
 }
