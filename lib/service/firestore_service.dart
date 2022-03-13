@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cuzdan/core/constant/db/collection_names.dart';
 import '../models/onboard_model.dart';
 
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<List<OnboardModel>> getOnboardData() async {
-    final CollectionReference _onboardRef = _firestore.collection('onboard');
+    final CollectionReference _onboardRef = _firestore.collection(CollectionNames.ONBOARD);
     QuerySnapshot querySnapsot = await _onboardRef.get();
     List<DocumentSnapshot> list = querySnapsot.docs;
     List<OnboardModel> onboardModelList = [];

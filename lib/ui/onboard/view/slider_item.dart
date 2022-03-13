@@ -20,20 +20,11 @@ class SlideItem extends BaseStateless {
           Expanded(
             child: Column(
               children: [
-                Image.asset(
-                  'assets/icons/cuzdanicon.png',
-                  height: dynamicHeight(context, 70),
-                ),
-                SizedBox(
-                  height: dynamicHeight(context, 50),
-                ),
+                Image.asset('assets/icons/cuzdanicon.png', height: dynamicHeight(context, 70)),
+                SizedBox(height: dynamicHeight(context, 50)),
                 Text(
-                  model.onboardModelList![index].header + ' asdas dasd a das ',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.3,
-                    fontSize: 40.0,
-                  ),
+                  model.onboardModelList![index].header,
+                  style: TextStyle(fontWeight: FontWeight.w600, letterSpacing: 1.3, fontSize: 40.0),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -41,20 +32,12 @@ class SlideItem extends BaseStateless {
           ),
           Expanded(
             child: Text(
-              model.onboardModelList![index].title +
-                  'Lorem ipsum dolor sit amet, consec adipiscing elit. Accumsan in lorem. Accumsan in lorem.',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                letterSpacing: 1.0,
-                height: 1.1,
-                fontSize: 16.0,
-              ),
+              model.onboardModelList![index].title + 'Lorem ipsum dolor sit amet, consec adipiscing elit. Accumsan in lorem. Accumsan in lorem.',
+              style: TextStyle(fontWeight: FontWeight.w600, letterSpacing: 1.0, height: 1.1, fontSize: 16.0),
               textAlign: TextAlign.start,
             ),
           ),
-          SizedBox(
-            height: bottomPadding(context),
-          ),
+          SizedBox(height: bottomPadding(context)),
         ],
       ),
     );

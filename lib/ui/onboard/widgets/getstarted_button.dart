@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../core/init/theme/color_scheme_dark.dart';
 
+//TODO custom button tasarlanması daha iyi olur
+//TODO statik veriler dinamiğe çekilmei
+
 class GetStartedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

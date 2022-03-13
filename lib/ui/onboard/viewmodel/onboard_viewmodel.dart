@@ -19,7 +19,5 @@ abstract class _OnboardViewModelBase with Store {
   }
 
   @action
-  onPageChanged(int index) {
-    currentPage = index;
-  }
+  onPageChanged(int index) => currentPage = index;
 }
