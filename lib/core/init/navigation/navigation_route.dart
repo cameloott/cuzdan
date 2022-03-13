@@ -1,3 +1,5 @@
+import 'package:cuzdan/ui/login/login_view.dart';
+
 import '../../../ui/onboard/view/onboard_view.dart';
 import '../../../ui/onboard/view/welcome_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,6 +25,8 @@ class NavigationRoute {
         return normalNavigate(WelcomeView());
       case NavigationConstants.ONBOARD_VIEW:
         return normalNavigate(OnboardView());
+      case NavigationConstants.LOGIN_VIEW:
+        return normalNavigate(LoginView(true));
       default:
         return normalNavigate(const Scaffold());
     }
