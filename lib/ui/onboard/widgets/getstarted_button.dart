@@ -1,3 +1,4 @@
+import 'package:cuzdan/ui/login/login_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/init/theme/color_scheme_dark.dart';
@@ -19,7 +20,9 @@ class GetStartedButton extends StatelessWidget {
             ),
             primary: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginView(true)));
+          },
           child: Text('giriş yap'),
         ),
         OutlinedButton(
@@ -30,6 +33,7 @@ class GetStartedButton extends StatelessWidget {
             backgroundColor: ColorSchemeDark.instance!.blue,
           ),
           onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginView(false)));
             print('Pressed');
           },
         )

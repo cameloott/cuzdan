@@ -1,5 +1,7 @@
 import 'package:cuzdan/core/base/state/base_state.dart';
+import 'package:cuzdan/core/constant/db/collection_names.dart';
 import 'package:cuzdan/core/init/navigation/navigation_service.dart';
+import 'package:cuzdan/service/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
@@ -10,6 +12,9 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends BaseState<LoginView> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final AuthService _authService = AuthService();
   bool passwordVisible = false;
 
   @override
@@ -87,7 +92,7 @@ class _LoginViewState extends BaseState<LoginView> {
           color: Colors.grey,
           fontWeight: FontWeight.w600,
         ),
-        onChanged: (value) {},
+        controller: _emailController,
         decoration: InputDecoration(
           contentPadding:
               EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
@@ -122,7 +127,7 @@ class _LoginViewState extends BaseState<LoginView> {
           color: Colors.grey,
           fontWeight: FontWeight.w600,
         ),
-        onChanged: (value) {},
+        controller: _passwordController,
         decoration: InputDecoration(
           contentPadding:
               EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
@@ -189,9 +194,9 @@ class _LoginViewState extends BaseState<LoginView> {
           widget.isLogin ? 'giriş yap' : 'kayıt ol',
           style: TextStyle(color: Colors.white),
         ),
-        onPressed: () {
-          //TODO press login
-        },
+        onPressed: widget.isLogin
+            ? _loginWithEmailAndPassword
+            : _createUserWithEmailAndPassword,
       ),
     );
   }
@@ -232,9 +237,48 @@ class _LoginViewState extends BaseState<LoginView> {
           style: TextStyle(color: Colors.white),
         ),
         onPressed: () {
-          //TODO press google login
+          _authService.signInWithGoogle();
         },
       ),
     );
+  }
+
+  _loginWithEmailAndPassword() async {
+    String result = await _authService.loginWithEmailAndPassword(
+        email: _emailController.text, password: _passwordController.text);
+    if (result == AuthResultMessage.kAuthSuccessLogin) {
+      print('giriş başarılı');
+      //scaffoldmessage veya benzeri 'giriş başarılı' mesajı
+      //Anasayfaya yönlendirme
+    } else if (result == AuthResultMessage.kUserNotFound) {
+      print('kullanıcı bulunamadı');
+      //scaffoldmessage veya benzeri 'kulanıcı bulunamadı' mesajı
+    } else if (result == AuthResultMessage.kWrongPassword) {
+      print('hatalı şifre girişi');
+      //scaffoldmessage veya benzeri 'hatalı şifre girişi' mesajı
+    } else if (result == AuthResultMessage.kUnExpectedErrorMessage) {
+      print('beklenmeyen bir hata oluştu');
+      //scaffoldmessage veya benzeri 'beklenmeyen bir hata oluştu' mesajı
+    }
+  }
+
+  _createUserWithEmailAndPassword() async {
+    String result = await _authService.createUserWithEmailAndPassword(
+        email: _emailController.text, password: _passwordController.text);
+    if (result == AuthResultMessage.kAuthSuccessRegister) {
+      print('kayıt başarılı');
+      //scaffoldmessage veya benzeri 'kayıt başarılı' mesajı
+      //Anasayfaya yönlendirme
+    } else if (result == AuthResultMessage.kWeakPassword) {
+      print('şifre en az 6 karakter uzunluğunda olmalıdır.');
+      //scaffoldmessage veya benzeri 'düşük seviyeli şifre / şifre en az 6 karakter uzunluğunda olmalıdır' mesajı
+    } else if (result == AuthResultMessage.kEmailAlreadyInUse) {
+      print('bu email adresine ait hesap bulunmakta');
+      //scaffoldmessage veya benzeri 'bu email adresine ait hesap bulunmakta' mesajı
+    } else if (result == AuthResultMessage.kUnExpectedErrorMessage) {
+      print('beklenmeyen bir hata oluştu');
+      //scaffoldmessage veya benzeri 'beklenmeyen bir hata oluştu' mesajı
+    }
+
   }
 }
