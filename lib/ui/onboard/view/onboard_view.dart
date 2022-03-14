@@ -1,13 +1,11 @@
 import '../../../core/base/state/base_state.dart';
+import '../../../core/init/theme/color_scheme_dark.dart';
 import '../viewmodel/onboard_viewmodel.dart';
+import '../widgets/custom_outline_button.dart';
 import '../widgets/slide_dots.dart';
 import 'slider_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
-import '../widgets/getstarted_button.dart';
-
-//TODO son elemanda alttaki daireler eksik eklenmeli
 
 class OnboardView extends StatefulWidget {
   @override
@@ -22,7 +20,8 @@ class _OnboardView extends BaseState<OnboardView> {
     super.initState();
   }
 
-  bool inFinalPage() => (onboardViewModel.currentPage == onboardViewModel.onboardModelList!.length - 1);
+  bool inFinalPage() => (onboardViewModel.currentPage ==
+      onboardViewModel.onboardModelList!.length - 1);
 
   @override
   Widget build(BuildContext context) => Scaffold(body: sliderLayout());
@@ -59,15 +58,49 @@ class _OnboardView extends BaseState<OnboardView> {
     return Container(
       alignment: AlignmentDirectional.bottomCenter,
       margin: EdgeInsets.only(bottom: dynamicHeight(50.0)),
-      child: inFinalPage()
-          ? GetStartedButton()
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                for (int i = 0; i < onboardViewModel.onboardModelList!.length; i++)
-                  if (i == onboardViewModel.currentPage) SlideDots(true) else SlideDots(false)
-              ],
-            ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          inFinalPage() ? startedButtons() : Container(),
+          SizedBox(
+            height: dynamicHeight(80),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              for (int i = 0;
+                  i < onboardViewModel.onboardModelList!.length;
+                  i++)
+                if (i == onboardViewModel.currentPage)
+                  SlideDots(true)
+                else
+                  SlideDots(false)
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Row startedButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        CustomOutlineButton(
+          borderColor: ColorSchemeDark.instance!.blue,
+          title: 'giriş yap',
+          onPressed: () {
+            print('giriş yap');
+          },
+        ),
+        CustomOutlineButton(
+          buttonColor: ColorSchemeDark.instance!.blue,
+          title: 'kayıt ol',
+          onPressed: () {
+            print('kayıt ol');
+          },
+        ),
+      ],
     );
   }
 }
