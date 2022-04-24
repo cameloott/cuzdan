@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cuzdan/core/constant/enum/preferences_keys_enum.dart';
+import '../../constant/enum/preferences_keys_enum.dart';
 
 class PreferencesManager {
   static PreferencesManager? _instance;
@@ -20,23 +20,27 @@ class PreferencesManager {
     await _preferences!.setString(key.toString(), value);
   }
 
-  String getStringVal(PreferencesKeys key) => _preferences!.getString(key.toString()) ?? "";
+  String getStringVal(PreferencesKeys key) =>
+      _preferences!.getString(key.toString()) ?? "";
 
   Future<void> setIntVal(PreferencesKeys key, int value) async {
     await _preferences!.setInt(key.toString(), value);
   }
 
-  int getIntVal(PreferencesKeys key) => _preferences!.getInt(key.toString()) ?? -1;
+  int getIntVal(PreferencesKeys key) =>
+      _preferences!.getInt(key.toString()) ?? -1;
 
   Future<void> setBoolVal(PreferencesKeys key, bool value) async {
     await _preferences!.setBool(key.toString(), value);
   }
 
-  bool getBoolVal(PreferencesKeys key) => _preferences!.getBool(key.toString()) ?? false;
+  bool getBoolVal(PreferencesKeys key) =>
+      _preferences!.getBool(key.toString()) ?? false;
 
   Future<void> setDoubleVal(PreferencesKeys key, double value) async {
     await _preferences!.setDouble(key.toString(), value);
   }
 
-  double getDoubleVal(PreferencesKeys key) => _preferences!.getDouble(key.toString()) ?? -1.0;
+  double getDoubleVal(PreferencesKeys key) =>
+      _preferences!.getDouble(key.toString()) ?? -1.0;
 }

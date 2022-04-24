@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cuzdan/core/init/theme/app_theme_datas.dart';
+import 'app_theme_datas.dart';
 
 class AppTheme {
   static AppTheme? _instance;
@@ -10,5 +10,5 @@ class AppTheme {
 
   AppTheme._init();
 
-  ThemeData get theme => AppThemeDatas().lightTheme;
+  ThemeData get theme => AppThemeDatas().darkTheme;
 }

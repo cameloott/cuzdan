@@ -14,13 +14,25 @@ dependencies:
   mobx: ^2.0.6+1
   provider: ^6.0.2
   shared_preferences: ^2.0.13
+  firebase_core: ^1.12.0
+  firebase_auth: ^3.3.8
+  cloud_firestore: ^3.1.9
+  flutter_mobx: ^2.0.4
+  mobx_codegen: ^2.0.5+2
+  google_sign_in: ^5.2.4
 
 dev_dependencies:
   flutter_lints: ^1.0.0
+  build_runner: ^2.1.7
   flutter_test:
     sdk: flutter
-
+  flutter_native_splash: ^2.1.1
 flutter:
   uses-material-design: true
   assets:
     - assets/languages/
+    - assets/icons/
+    - assets/images/
+flutter_native_splash:
+  background_image: "assets/images/splash.png"
+  background_image_dark: "assets/images/splash.png"
