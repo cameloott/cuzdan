@@ -1,3 +1,7 @@
+import 'package:cuzdan/core/constant/enum/authentication_enum.dart';
+import 'package:cuzdan/core/constant/navigation/navigation_constants.dart';
+import 'package:cuzdan/core/init/navigation/navigation_service.dart';
+
 import '../../../core/base/state/base_state.dart';
 import '../../../core/init/theme/color_scheme_dark.dart';
 import '../viewmodel/onboard_viewmodel.dart';
@@ -20,8 +24,7 @@ class _OnboardView extends BaseState<OnboardView> {
     super.initState();
   }
 
-  bool inFinalPage() => (onboardViewModel.currentPage ==
-      onboardViewModel.onboardModelList!.length - 1);
+  bool inFinalPage() => (onboardViewModel.currentPage == onboardViewModel.onboardModelList!.length - 1);
 
   @override
   Widget build(BuildContext context) => Scaffold(body: sliderLayout());
@@ -68,13 +71,8 @@ class _OnboardView extends BaseState<OnboardView> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              for (int i = 0;
-                  i < onboardViewModel.onboardModelList!.length;
-                  i++)
-                if (i == onboardViewModel.currentPage)
-                  SlideDots(true)
-                else
-                  SlideDots(false)
+              for (int i = 0; i < onboardViewModel.onboardModelList!.length; i++)
+                if (i == onboardViewModel.currentPage) SlideDots(true) else SlideDots(false)
             ],
           ),
         ],
@@ -90,14 +88,14 @@ class _OnboardView extends BaseState<OnboardView> {
           borderColor: ColorSchemeDark.instance!.blue,
           title: 'giriş yap',
           onPressed: () {
-            print('giriş yap');
+            NavigationService.instance.navigateToPageClear(path: NavigationConstants.LOGIN_VIEW, object: {'authentication': Authentication.LOGIN});
           },
         ),
         CustomOutlineButton(
           buttonColor: ColorSchemeDark.instance!.blue,
           title: 'kayıt ol',
           onPressed: () {
-            print('kayıt ol');
+            NavigationService.instance.navigateToPageClear(path: NavigationConstants.LOGIN_VIEW, object: {'authentication': Authentication.REGISTER});
           },
         ),
       ],

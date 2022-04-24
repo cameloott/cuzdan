@@ -26,22 +26,18 @@ class NavigationRoute {
       case NavigationConstants.ONBOARD_VIEW:
         return normalNavigate(OnboardView());
       case NavigationConstants.LOGIN_VIEW:
-        return normalNavigate(LoginView(true));
+        final arguments = args.arguments as Map;
+        return normalNavigate(LoginView(authentication: arguments['authentication']));
       default:
         return normalNavigate(const Scaffold());
     }
   }
 
   PageRoute normalNavigate(Widget widget) {
-    return Platform.isAndroid
-        ? MaterialPageRoute(builder: (context) => widget)
-        : CupertinoPageRoute(builder: (context) => widget);
+    return Platform.isAndroid ? MaterialPageRoute(builder: (context) => widget) : CupertinoPageRoute(builder: (context) => widget);
   }
 
   PageRoute normalNavigateToPop(Widget widget) {
-    return Platform.isAndroid
-        ? MaterialPageRoute(builder: (context) => widget)
-        : CupertinoPageRoute(
-            builder: (context) => widget, fullscreenDialog: true);
+    return Platform.isAndroid ? MaterialPageRoute(builder: (context) => widget) : CupertinoPageRoute(builder: (context) => widget, fullscreenDialog: true);
   }
 }

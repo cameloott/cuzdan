@@ -11,6 +11,10 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends BaseState<HomeView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Center(
+        child: Text('HOME SCREEN'),
+      ),
+    );
   }
 }

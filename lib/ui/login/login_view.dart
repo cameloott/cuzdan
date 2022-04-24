@@ -1,12 +1,15 @@
 import 'package:cuzdan/core/base/state/base_state.dart';
 import 'package:cuzdan/core/constant/db/collection_names.dart';
+import 'package:cuzdan/core/constant/enum/authentication_enum.dart';
+import 'package:cuzdan/core/constant/navigation/navigation_constants.dart';
 import 'package:cuzdan/core/init/navigation/navigation_service.dart';
 import 'package:cuzdan/service/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
-  const LoginView(this.isLogin, {Key? key}) : super(key: key);
-  final bool isLogin;
+  final Authentication authentication;
+  const LoginView({Key? key, required this.authentication}) : super(key: key);
+
   @override
   State<LoginView> createState() => _LoginViewState();
 }
@@ -20,7 +23,7 @@ class _LoginViewState extends BaseState<LoginView> {
   @override
   void initState() {
     super.initState();
-    passwordVisible = !widget.isLogin;
+    passwordVisible = widget.authentication == Authentication.REGISTER;
   }
 
   @override
@@ -50,8 +53,7 @@ class _LoginViewState extends BaseState<LoginView> {
     return Stack(
       children: [
         Container(
-          margin:
-              EdgeInsets.only(left: dynamicWidth(32), top: dynamicHeight(124)),
+          margin: EdgeInsets.only(left: dynamicWidth(32), top: dynamicHeight(124)),
           width: dynamicWidth(67.15),
           height: dynamicHeight(67.15),
           decoration: BoxDecoration(
@@ -60,10 +62,9 @@ class _LoginViewState extends BaseState<LoginView> {
           ),
         ),
         Container(
-          margin:
-              EdgeInsets.only(left: dynamicWidth(61), top: dynamicHeight(128)),
+          margin: EdgeInsets.only(left: dynamicWidth(61), top: dynamicHeight(128)),
           child: Text(
-            widget.isLogin ? 'giriş yap' : 'kayıt ol',
+            widget.authentication == Authentication.LOGIN ? 'giriş yap' : 'kayıt ol',
             style: TextStyle(fontSize: 44),
           ),
         ),
@@ -94,8 +95,7 @@ class _LoginViewState extends BaseState<LoginView> {
         ),
         controller: _emailController,
         decoration: InputDecoration(
-          contentPadding:
-              EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
+          contentPadding: EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
           focusColor: Colors.white,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
@@ -129,8 +129,7 @@ class _LoginViewState extends BaseState<LoginView> {
         ),
         controller: _passwordController,
         decoration: InputDecoration(
-          contentPadding:
-              EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
+          contentPadding: EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
           focusColor: Colors.white,
           suffixIcon: IconButton(
               icon: Icon(
@@ -169,7 +168,7 @@ class _LoginViewState extends BaseState<LoginView> {
           //TODO şifremi unuttum
         },
         child: Text(
-          widget.isLogin ? 'şifremi unuttum' : '',
+          widget.authentication == Authentication.LOGIN ? 'şifremi unuttum' : '',
           style: TextStyle(fontSize: 14),
         ),
       ),
@@ -191,12 +190,10 @@ class _LoginViewState extends BaseState<LoginView> {
           ),
         ),
         child: Text(
-          widget.isLogin ? 'giriş yap' : 'kayıt ol',
+          widget.authentication == Authentication.LOGIN ? 'giriş yap' : 'kayıt ol',
           style: TextStyle(color: Colors.white),
         ),
-        onPressed: widget.isLogin
-            ? _loginWithEmailAndPassword
-            : _createUserWithEmailAndPassword,
+        onPressed: widget.authentication == Authentication.LOGIN ? _loginWithEmailAndPassword : _createUserWithEmailAndPassword,
       ),
     );
   }
@@ -233,7 +230,7 @@ class _LoginViewState extends BaseState<LoginView> {
           height: dynamicHeight(24),
         ),
         label: Text(
-          'Google ile ' + (widget.isLogin ? 'giriş yap' : 'kayıt ol'),
+          'Google ile ' + (widget.authentication == Authentication.LOGIN ? 'giriş yap' : 'kayıt ol'),
           style: TextStyle(color: Colors.white),
         ),
         onPressed: () {
@@ -244,41 +241,45 @@ class _LoginViewState extends BaseState<LoginView> {
   }
 
   _loginWithEmailAndPassword() async {
-    String result = await _authService.loginWithEmailAndPassword(
-        email: _emailController.text, password: _passwordController.text);
+    String result = await _authService.loginWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
     if (result == AuthResultMessage.kAuthSuccessLogin) {
-      print('giriş başarılı');
-      //scaffoldmessage veya benzeri 'giriş başarılı' mesajı
-      //Anasayfaya yönlendirme
+      showCustomSnackbar(context, 'Giriş başarılı!', Icons.done, Colors.green);
+      NavigationService.instance.navigateToPageClear(path: NavigationConstants.HOME_VIEW);
     } else if (result == AuthResultMessage.kUserNotFound) {
-      print('kullanıcı bulunamadı');
-      //scaffoldmessage veya benzeri 'kulanıcı bulunamadı' mesajı
+      showCustomSnackbar(context, 'Kullanıcı bulunamadı!', Icons.info, Colors.blue);
     } else if (result == AuthResultMessage.kWrongPassword) {
-      print('hatalı şifre girişi');
-      //scaffoldmessage veya benzeri 'hatalı şifre girişi' mesajı
+      showCustomSnackbar(context, 'Hatalı şifre girişi!', Icons.warning, Colors.red);
     } else if (result == AuthResultMessage.kUnExpectedErrorMessage) {
-      print('beklenmeyen bir hata oluştu');
-      //scaffoldmessage veya benzeri 'beklenmeyen bir hata oluştu' mesajı
+      showCustomSnackbar(context, 'Beklenmeyen bir hata oluştu!', Icons.warning, Colors.red);
     }
   }
 
   _createUserWithEmailAndPassword() async {
-    String result = await _authService.createUserWithEmailAndPassword(
-        email: _emailController.text, password: _passwordController.text);
+    String result = await _authService.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
     if (result == AuthResultMessage.kAuthSuccessRegister) {
-      print('kayıt başarılı');
-      //scaffoldmessage veya benzeri 'kayıt başarılı' mesajı
-      //Anasayfaya yönlendirme
+      showCustomSnackbar(context, 'Kayıt başarılı!', Icons.done, Colors.green);
+      NavigationService.instance.navigateToPageClear(path: NavigationConstants.LOGIN_VIEW, object: {'authentication': Authentication.LOGIN});
     } else if (result == AuthResultMessage.kWeakPassword) {
-      print('şifre en az 6 karakter uzunluğunda olmalıdır.');
-      //scaffoldmessage veya benzeri 'düşük seviyeli şifre / şifre en az 6 karakter uzunluğunda olmalıdır' mesajı
+      showCustomSnackbar(context, 'Şifre en az 6 karakter uzunluğunda olmalıdır!', Icons.info, Colors.blue);
     } else if (result == AuthResultMessage.kEmailAlreadyInUse) {
-      print('bu email adresine ait hesap bulunmakta');
-      //scaffoldmessage veya benzeri 'bu email adresine ait hesap bulunmakta' mesajı
+      showCustomSnackbar(context, 'Bu email adresine ait hesap bulunmakta!', Icons.warning, Colors.red);
     } else if (result == AuthResultMessage.kUnExpectedErrorMessage) {
-      print('beklenmeyen bir hata oluştu');
-      //scaffoldmessage veya benzeri 'beklenmeyen bir hata oluştu' mesajı
+      showCustomSnackbar(context, 'Beklenmeyen bir hata oluştu!', Icons.warning, Colors.red);
     }
+  }
 
+  void showCustomSnackbar(BuildContext context, String message, IconData icon, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [Icon(icon), Expanded(child: Text(message))],
+      ),
+      backgroundColor: color,
+      duration: Duration(seconds: 3),
+      shape: StadiumBorder(),
+      margin: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+      behavior: SnackBarBehavior.floating,
+      elevation: 0,
+    ));
   }
 }
