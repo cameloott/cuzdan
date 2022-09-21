@@ -1,4 +1,4 @@
-import 'package:cuzdan/ui/login/login_view.dart';
+import 'package:cuzdan/ui/login/view/login_view.dart';
 
 import '../../../ui/onboard/view/onboard_view.dart';
 import '../../../ui/onboard/view/welcome_view.dart';

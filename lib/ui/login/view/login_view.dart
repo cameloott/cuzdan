@@ -1,9 +1,7 @@
 import 'package:cuzdan/core/base/state/base_state.dart';
-import 'package:cuzdan/core/constant/db/collection_names.dart';
+import 'package:cuzdan/core/base/view/base_view.dart';
 import 'package:cuzdan/core/constant/enum/authentication_enum.dart';
-import 'package:cuzdan/core/constant/navigation/navigation_constants.dart';
-import 'package:cuzdan/core/init/navigation/navigation_service.dart';
-import 'package:cuzdan/service/auth_service.dart';
+import 'package:cuzdan/ui/login/viewmodel/login_view_model.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
@@ -11,42 +9,45 @@ class LoginView extends StatefulWidget {
   const LoginView({Key? key, required this.authentication}) : super(key: key);
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  BaseState<LoginView> createState() => _LoginViewState();
 }
 
 class _LoginViewState extends BaseState<LoginView> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final AuthService _authService = AuthService();
-  bool passwordVisible = false;
-
-  @override
-  void initState() {
-    super.initState();
-    passwordVisible = widget.authentication == Authentication.REGISTER;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xff111016),
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
+    return BaseView<LoginViewModel>(
+      viewModel: LoginViewModel(),
+      onModelReady: (model) {
+        model.setContext(context);
+        model.init();
+      },
+      onPageBuilder: (BuildContext context, LoginViewModel value) => Scaffold(
+        key: value.scaffoldState,
+        backgroundColor: Color(0xff111016),
+        resizeToAvoidBottomInset: false,
+        body: SafeArea(
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildTextHeader(),
-          buildTextDetail(),
-          buildTextFormFieldEmail(),
-          buildTextFormFieldPassword(),
-          buildTextForgetPassword(),
-          buildElevatedButtonLogin(),
-          buildText(),
-          buildElevatedButtonLoginWithGoogle(),
-        ],
-      )),
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildBackButton(value),
+              buildTextHeader(),
+              buildTextDetail(),
+              buildTextFormFieldEmail(value),
+              buildTextFormFieldPassword(value),
+              buildTextForgetPassword(),
+              buildElevatedButtonLogin(value),
+              buildText(),
+              buildElevatedButtonLoginWithGoogle(value),
+            ],
+          ),
+        ),
+      ),
     );
+  }
+
+  Widget buildBackButton(LoginViewModel viewModel) {
+    return IconButton(onPressed: () => viewModel.goBack(), icon: Icon(Icons.arrow_back));
   }
 
   Widget buildTextHeader() {
@@ -82,7 +83,7 @@ class _LoginViewState extends BaseState<LoginView> {
     );
   }
 
-  Widget buildTextFormFieldEmail() {
+  Widget buildTextFormFieldEmail(LoginViewModel viewModel) {
     return Container(
       margin: EdgeInsets.only(left: dynamicWidth(30), top: dynamicHeight(50)),
       width: dynamicWidth(330),
@@ -93,11 +94,12 @@ class _LoginViewState extends BaseState<LoginView> {
           color: Colors.grey,
           fontWeight: FontWeight.w600,
         ),
-        controller: _emailController,
+        controller: viewModel.emailController,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
           focusColor: Colors.white,
-          border: OutlineInputBorder(
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
             borderRadius: BorderRadius.circular(10.0),
           ),
           focusedBorder: OutlineInputBorder(
@@ -106,42 +108,38 @@ class _LoginViewState extends BaseState<LoginView> {
           ),
           fillColor: Colors.grey,
           hintText: "Email",
-          hintStyle: TextStyle(
-            color: Colors.grey,
-            fontSize: 16,
-          ),
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w400),
         ),
       ),
     );
   }
 
-  Widget buildTextFormFieldPassword() {
+  Widget buildTextFormFieldPassword(LoginViewModel viewModel) {
     return Container(
       margin: EdgeInsets.only(left: dynamicWidth(30), top: dynamicHeight(20)),
       width: dynamicWidth(330),
       height: dynamicHeight(50),
       child: TextFormField(
-        obscureText: !passwordVisible,
+        obscureText: viewModel.passwordVisible,
         style: TextStyle(
           fontSize: 16,
           color: Colors.grey,
           fontWeight: FontWeight.w600,
         ),
-        controller: _passwordController,
+        controller: viewModel.passwordController,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
           focusColor: Colors.white,
           suffixIcon: IconButton(
               icon: Icon(
-                passwordVisible ? Icons.visibility : Icons.visibility_off,
+                viewModel.passwordVisible ? Icons.visibility : Icons.visibility_off,
                 color: Colors.grey,
               ),
               onPressed: () {
-                setState(() {
-                  passwordVisible = !passwordVisible;
-                });
+                viewModel.isLockStateChange();
               }),
-          border: OutlineInputBorder(
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
             borderRadius: BorderRadius.circular(10.0),
           ),
           focusedBorder: OutlineInputBorder(
@@ -150,10 +148,7 @@ class _LoginViewState extends BaseState<LoginView> {
           ),
           fillColor: Colors.grey,
           hintText: "Password",
-          hintStyle: TextStyle(
-            color: Colors.grey,
-            fontSize: 16,
-          ),
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w400),
         ),
       ),
     );
@@ -175,7 +170,7 @@ class _LoginViewState extends BaseState<LoginView> {
     );
   }
 
-  Widget buildElevatedButtonLogin() {
+  Widget buildElevatedButtonLogin(LoginViewModel viewModel) {
     return Container(
       margin: EdgeInsets.only(left: dynamicWidth(235), top: dynamicHeight(20)),
       width: dynamicWidth(125),
@@ -193,7 +188,7 @@ class _LoginViewState extends BaseState<LoginView> {
           widget.authentication == Authentication.LOGIN ? 'giriş yap' : 'kayıt ol',
           style: TextStyle(color: Colors.white),
         ),
-        onPressed: widget.authentication == Authentication.LOGIN ? _loginWithEmailAndPassword : _createUserWithEmailAndPassword,
+        onPressed: widget.authentication == Authentication.LOGIN ? viewModel.loginWithEmailAndPassword : viewModel.createUserWithEmailAndPassword,
       ),
     );
   }
@@ -209,18 +204,22 @@ class _LoginViewState extends BaseState<LoginView> {
     );
   }
 
-  Widget buildElevatedButtonLoginWithGoogle() {
+  Widget buildElevatedButtonLoginWithGoogle(LoginViewModel viewModel) {
     return Container(
       margin: EdgeInsets.only(left: dynamicWidth(30), top: dynamicHeight(30)),
       width: dynamicWidth(330),
       height: dynamicHeight(50),
       child: ElevatedButton.icon(
         style: ButtonStyle(
+          side: MaterialStateProperty.all(BorderSide(
+            width: 1.0,
+            color: Color(0xff2B44FF),
+          )),
           textStyle: MaterialStateProperty.all(
-            const TextStyle(fontSize: 20),
+            const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           backgroundColor: MaterialStateProperty.all(
-            Color(0xff2B44FF),
+            Color.fromRGBO(43, 68, 255, 0.2),
           ),
           alignment: Alignment.centerLeft,
         ),
@@ -231,55 +230,12 @@ class _LoginViewState extends BaseState<LoginView> {
         ),
         label: Text(
           'Google ile ' + (widget.authentication == Authentication.LOGIN ? 'giriş yap' : 'kayıt ol'),
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400),
         ),
         onPressed: () {
-          _authService.signInWithGoogle();
+          viewModel.signInWithGoogle();
         },
       ),
     );
-  }
-
-  _loginWithEmailAndPassword() async {
-    String result = await _authService.loginWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
-    if (result == AuthResultMessage.kAuthSuccessLogin) {
-      showCustomSnackbar(context, 'Giriş başarılı!', Icons.done, Colors.green);
-      NavigationService.instance.navigateToPageClear(path: NavigationConstants.HOME_VIEW);
-    } else if (result == AuthResultMessage.kUserNotFound) {
-      showCustomSnackbar(context, 'Kullanıcı bulunamadı!', Icons.info, Colors.blue);
-    } else if (result == AuthResultMessage.kWrongPassword) {
-      showCustomSnackbar(context, 'Hatalı şifre girişi!', Icons.warning, Colors.red);
-    } else if (result == AuthResultMessage.kUnExpectedErrorMessage) {
-      showCustomSnackbar(context, 'Beklenmeyen bir hata oluştu!', Icons.warning, Colors.red);
-    }
-  }
-
-  _createUserWithEmailAndPassword() async {
-    String result = await _authService.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
-    if (result == AuthResultMessage.kAuthSuccessRegister) {
-      showCustomSnackbar(context, 'Kayıt başarılı!', Icons.done, Colors.green);
-      NavigationService.instance.navigateToPageClear(path: NavigationConstants.LOGIN_VIEW, object: {'authentication': Authentication.LOGIN});
-    } else if (result == AuthResultMessage.kWeakPassword) {
-      showCustomSnackbar(context, 'Şifre en az 6 karakter uzunluğunda olmalıdır!', Icons.info, Colors.blue);
-    } else if (result == AuthResultMessage.kEmailAlreadyInUse) {
-      showCustomSnackbar(context, 'Bu email adresine ait hesap bulunmakta!', Icons.warning, Colors.red);
-    } else if (result == AuthResultMessage.kUnExpectedErrorMessage) {
-      showCustomSnackbar(context, 'Beklenmeyen bir hata oluştu!', Icons.warning, Colors.red);
-    }
-  }
-
-  void showCustomSnackbar(BuildContext context, String message, IconData icon, Color color) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [Icon(icon), Expanded(child: Text(message))],
-      ),
-      backgroundColor: color,
-      duration: Duration(seconds: 3),
-      shape: StadiumBorder(),
-      margin: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-      behavior: SnackBarBehavior.floating,
-      elevation: 0,
-    ));
   }
 }
