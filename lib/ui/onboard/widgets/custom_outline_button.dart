@@ -1,8 +1,6 @@
 import 'package:cuzdan/core/base/state/base_state.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/init/theme/color_scheme_dark.dart';
-
 class CustomOutlineButton extends BaseStateless {
   final String title;
   final Function()? onPressed;
@@ -22,10 +20,13 @@ class CustomOutlineButton extends BaseStateless {
       height: dynamicHeight(context, 50),
       width: dynamicWidth(context, 125),
       child: ElevatedButton(
-          child: Text(title),
+          child: Text(
+            title,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, fontFamily: 'Gilroy'),
+          ),
           style: ElevatedButton.styleFrom(
-            primary: buttonColor,
-            onPrimary: Colors.white,
+            foregroundColor: Colors.white,
+            backgroundColor: buttonColor,
             side: BorderSide(
               color: borderColor!,
               width: 1,

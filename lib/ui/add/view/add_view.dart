@@ -1,7 +1,9 @@
 import 'package:cuzdan/core/base/state/base_state.dart';
 import 'package:cuzdan/core/base/view/base_view.dart';
+import 'package:cuzdan/core/init/theme/color_scheme_dark.dart';
 import 'package:cuzdan/ui/add/viewmodel/add_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class AddView extends StatefulWidget {
   @override
@@ -9,6 +11,13 @@ class AddView extends StatefulWidget {
 }
 
 class _AddViewState extends BaseState<AddView> {
+  OutlineInputBorder border = OutlineInputBorder(borderSide: BorderSide(color: ColorSchemeDark.instance!.blue, width: 1.0), borderRadius: BorderRadius.circular(7.0));
+  TextStyle style = TextStyle(fontSize: 16, fontWeight: FontWeight.w400, fontFamily: 'Gilroy');
+
+  Map<String, dynamic> gelir = {'A': Icons.abc, 'B': Icons.abc, 'C': Icons.abc, 'D': Icons.abc, 'E': Icons.abc, 'F': Icons.abc, 'G': Icons.abc, 'H': Icons.abc, 'I': Icons.abc};
+  Map<String, dynamic> gider = {'1': Icons.add, '2': Icons.add, '3': Icons.add, '4': Icons.add, '5': Icons.add, '6': Icons.add, '7': Icons.add, '8': Icons.add, '9': Icons.add};
+  int initialIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return BaseView<AddViewModel>(
@@ -74,98 +83,36 @@ class _AddViewState extends BaseState<AddView> {
                                   ),
                                   Text(
                                     'Kategori Seçimi',
-                                    style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600),
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, fontFamily: 'Gilroy'),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 21.0),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(left: 40.0, right: 20.0),
-                                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(Icons.abc, color: Color(0xff2B44FF)),
-                                        ),
-                                        Text('abc')
-                                      ],
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      left: dynamicWidth(29),
+                                      top: dynamicHeight(18),
+                                      right: dynamicWidth(29),
+                                    ),
+                                    width: dynamicWidth(332),
+                                    height: dynamicHeight(40),
+                                    decoration: BoxDecoration(color: Color(0XFF111016), border: Border.all(color: Color(0XFF232527)), borderRadius: BorderRadius.all(Radius.circular(6.0))),
+                                    child: ToggleSwitch(
+                                      cornerRadius: 6.0,
+                                      minWidth: dynamicWidth(164.3),
+                                      activeBgColor: [Color(0XFF232527)],
+                                      activeFgColor: Colors.white,
+                                      inactiveBgColor: Color(0XFF111016),
+                                      inactiveFgColor: Color(0XFF666666),
+                                      initialLabelIndex: initialIndex,
+                                      totalSwitches: 2,
+                                      labels: ['gelir', 'gider'],
+                                      onToggle: (index) {
+                                        setState(() {
+                                          initialIndex = index!;
+                                          value.ioController?.text = index == 0 ? 'Gelir Bilgisi' : 'Gider Bilgisi';
+                                        });
+                                      },
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 21.0),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(left: 40.0, right: 20.0),
-                                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(Icons.abc, color: Color(0xff2B44FF)),
-                                        ),
-                                        Text('abc')
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 21.0),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(left: 40.0, right: 20.0),
-                                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(Icons.abc, color: Color(0xff2B44FF)),
-                                        ),
-                                        Text('abc')
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 21.0),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(left: 40.0, right: 20.0),
-                                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(Icons.abc, color: Color(0xff2B44FF)),
-                                        ),
-                                        Text('abc')
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 21.0),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(left: 40.0, right: 20.0),
-                                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(Icons.abc, color: Color(0xff2B44FF)),
-                                        ),
-                                        Text('abc')
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 21.0),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(left: 40.0, right: 20.0),
-                                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(Icons.abc, color: Color(0xff2B44FF)),
-                                        ),
-                                        Text('abc')
-                                      ],
-                                    ),
-                                  ),
+                                  getCategory(initialIndex == 0 ? gelir : gider, value),
                                 ],
                               ),
                             ),
@@ -179,6 +126,38 @@ class _AddViewState extends BaseState<AddView> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Container getCategory(Map<String, dynamic> list, AddViewModel value) {
+    return Container(
+      padding: EdgeInsets.only(top: 8.0),
+      height: dynamicHeight(height * 0.25),
+      child: ListView.builder(
+        shrinkWrap: true,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        itemCount: list.length,
+        itemBuilder: (BuildContext context, int index) {
+          return InkWell(
+            onTap: () => value.categoryController?.text = list.entries.toList()[index].key,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 21.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 40.0, right: 20.0),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(list.entries.toList()[index].value, color: Color(0xff2B44FF)),
+                  ),
+                  Text(list.entries.toList()[index].key)
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -199,7 +178,7 @@ class _AddViewState extends BaseState<AddView> {
           margin: EdgeInsets.only(left: dynamicWidth(44.79), top: dynamicHeight(80)),
           child: Text(
             'cüzdana ekle',
-            style: TextStyle(fontSize: 36),
+            style: TextStyle(fontSize: 36, fontWeight: FontWeight.w500, fontFamily: 'Gilroy'),
           ),
         ),
       ],
@@ -212,26 +191,16 @@ class _AddViewState extends BaseState<AddView> {
       width: dynamicWidth(330),
       height: dynamicHeight(50),
       child: TextFormField(
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.grey,
-          fontWeight: FontWeight.w600,
-        ),
+        style: style,
         controller: viewModel.nameController,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
           focusColor: Colors.white,
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
+          enabledBorder: border,
+          focusedBorder: border,
           fillColor: Colors.grey,
           hintText: "Name",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w400),
+          hintStyle: style,
         ),
       ),
     );
@@ -243,11 +212,7 @@ class _AddViewState extends BaseState<AddView> {
       width: dynamicWidth(330),
       height: dynamicHeight(50),
       child: TextFormField(
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.grey,
-          fontWeight: FontWeight.w600,
-        ),
+        style: style,
         controller: viewModel.priceController,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
@@ -262,17 +227,11 @@ class _AddViewState extends BaseState<AddView> {
               ),
             ],
           ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
+          enabledBorder: border,
+          focusedBorder: border,
           fillColor: Colors.grey,
           hintText: "Price",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w400),
+          hintStyle: style,
         ),
       ),
     );
@@ -284,11 +243,7 @@ class _AddViewState extends BaseState<AddView> {
       width: dynamicWidth(330),
       height: dynamicHeight(50),
       child: TextFormField(
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.grey,
-          fontWeight: FontWeight.w600,
-        ),
+        style: style,
         controller: viewModel.dateController,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
@@ -297,17 +252,11 @@ class _AddViewState extends BaseState<AddView> {
             Icons.date_range,
             color: Color(0xffE16A28),
           ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
+          enabledBorder: border,
+          focusedBorder: border,
           fillColor: Colors.grey,
           hintText: "Date",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w400),
+          hintStyle: style,
         ),
       ),
     );
@@ -321,26 +270,16 @@ class _AddViewState extends BaseState<AddView> {
           width: dynamicWidth(150),
           height: dynamicHeight(48),
           child: TextFormField(
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey,
-              fontWeight: FontWeight.w600,
-            ),
-            controller: viewModel.nameController,
+            style: style,
+            controller: viewModel.ioController,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
               focusColor: Colors.white,
-              enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
+              enabledBorder: border,
+              focusedBorder: border,
               fillColor: Colors.grey,
-              hintText: "",
-              hintStyle: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w400),
+              hintText: "IO",
+              hintStyle: style,
             ),
           ),
         ),
@@ -349,26 +288,16 @@ class _AddViewState extends BaseState<AddView> {
           width: dynamicWidth(150),
           height: dynamicHeight(48),
           child: TextFormField(
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey,
-              fontWeight: FontWeight.w600,
-            ),
-            controller: viewModel.nameController,
+            style: style,
+            controller: viewModel.categoryController,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
               focusColor: Colors.white,
-              enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
+              enabledBorder: border,
+              focusedBorder: border,
               fillColor: Colors.grey,
-              hintText: "",
-              hintStyle: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w400),
+              hintText: "Category",
+              hintStyle: style,
             ),
           ),
         ),
@@ -384,21 +313,14 @@ class _AddViewState extends BaseState<AddView> {
       decoration: BoxDecoration(border: Border.all(color: Color.fromRGBO(43, 68, 255, 0.2)), borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: ElevatedButton(
         style: ButtonStyle(
-          side: MaterialStateProperty.all(BorderSide(
-            width: 1.0,
-            color: Color(0xff2B44FF),
-          )),
-          textStyle: MaterialStateProperty.all(
-            const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-          ),
-          backgroundColor: MaterialStateProperty.all(
-            Color.fromRGBO(43, 68, 255, 0.2),
-          ),
+          side: MaterialStateProperty.all(BorderSide(width: 1.0, color: Color(0xff2B44FF))),
+          textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
+          backgroundColor: MaterialStateProperty.all(Color.fromRGBO(43, 68, 255, 0.2)),
           alignment: Alignment.center,
         ),
         child: Text(
           'onayla',
-          style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, fontFamily: 'Gilroy'),
           textAlign: TextAlign.center,
         ),
         onPressed: () {

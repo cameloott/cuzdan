@@ -10,6 +10,8 @@ abstract class _AddViewModelBase with Store, BaseViewModel {
   TextEditingController? nameController;
   TextEditingController? priceController;
   TextEditingController? dateController;
+  TextEditingController? ioController;
+  TextEditingController? categoryController;
   @override
   void setContext(BuildContext context) => this.context = context;
   @override
@@ -17,5 +19,7 @@ abstract class _AddViewModelBase with Store, BaseViewModel {
     nameController = TextEditingController();
     priceController = TextEditingController();
     dateController = TextEditingController();
+    ioController = TextEditingController();
+    categoryController = TextEditingController();
   }
 }

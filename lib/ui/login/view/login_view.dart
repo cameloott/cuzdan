@@ -1,7 +1,11 @@
 import 'package:cuzdan/core/base/state/base_state.dart';
 import 'package:cuzdan/core/base/view/base_view.dart';
 import 'package:cuzdan/core/constant/enum/authentication_enum.dart';
+import 'package:cuzdan/core/constant/navigation/navigation_constants.dart';
+import 'package:cuzdan/core/init/navigation/navigation_service.dart';
+import 'package:cuzdan/core/init/theme/color_scheme_dark.dart';
 import 'package:cuzdan/ui/login/viewmodel/login_view_model.dart';
+import 'package:cuzdan/ui/onboard/widgets/custom_outline_button.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
@@ -13,6 +17,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends BaseState<LoginView> {
+  OutlineInputBorder border = OutlineInputBorder(borderSide: BorderSide(color: ColorSchemeDark.instance!.blue, width: 1.0), borderRadius: BorderRadius.circular(20.0));
+  TextStyle style = TextStyle(fontSize: 16, color: ColorSchemeDark.instance!.grey, fontWeight: FontWeight.w400, fontFamily: 'Gilroy');
   @override
   Widget build(BuildContext context) {
     return BaseView<LoginViewModel>(
@@ -30,15 +36,16 @@ class _LoginViewState extends BaseState<LoginView> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildBackButton(value),
+              //buildBackButton(value),
               buildTextHeader(),
               buildTextDetail(),
               buildTextFormFieldEmail(value),
               buildTextFormFieldPassword(value),
               buildTextForgetPassword(),
               buildElevatedButtonLogin(value),
-              buildText(),
-              buildElevatedButtonLoginWithGoogle(value),
+              buildTextAccount()
+              //buildText(),
+              //buildElevatedButtonLoginWithGoogle(value),
             ],
           ),
         ),
@@ -46,19 +53,17 @@ class _LoginViewState extends BaseState<LoginView> {
     );
   }
 
-  Widget buildBackButton(LoginViewModel viewModel) {
-    return IconButton(onPressed: () => viewModel.goBack(), icon: Icon(Icons.arrow_back));
-  }
+  Widget buildBackButton(LoginViewModel viewModel) => IconButton(onPressed: () => viewModel.goBack(), icon: Icon(Icons.arrow_back));
 
   Widget buildTextHeader() {
     return Stack(
       children: [
         Container(
           margin: EdgeInsets.only(left: dynamicWidth(32), top: dynamicHeight(124)),
-          width: dynamicWidth(67.15),
-          height: dynamicHeight(67.15),
+          width: dynamicWidth(62),
+          height: dynamicHeight(62),
           decoration: BoxDecoration(
-            color: Color(0xff2B44FF),
+            color: ColorSchemeDark.instance!.blue,
             shape: BoxShape.circle,
           ),
         ),
@@ -66,7 +71,7 @@ class _LoginViewState extends BaseState<LoginView> {
           margin: EdgeInsets.only(left: dynamicWidth(61), top: dynamicHeight(128)),
           child: Text(
             widget.authentication == Authentication.LOGIN ? 'giriş yap' : 'kayıt ol',
-            style: TextStyle(fontSize: 44),
+            style: TextStyle(fontSize: 44, fontWeight: FontWeight.w400, fontFamily: 'Gilroy'),
           ),
         ),
       ],
@@ -75,10 +80,10 @@ class _LoginViewState extends BaseState<LoginView> {
 
   Widget buildTextDetail() {
     return Container(
-      margin: EdgeInsets.only(left: dynamicWidth(36), top: dynamicHeight(24)),
+      margin: EdgeInsets.only(left: dynamicWidth(36), top: dynamicHeight(29)),
       child: Text(
         'Lorem ipsum dolor sit amet, consec adipiscing elit.',
-        style: TextStyle(fontSize: 18),
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300, fontFamily: 'Gilroy'),
       ),
     );
   }
@@ -89,26 +94,17 @@ class _LoginViewState extends BaseState<LoginView> {
       width: dynamicWidth(330),
       height: dynamicHeight(50),
       child: TextFormField(
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.grey,
-          fontWeight: FontWeight.w600,
-        ),
+        style: style,
         controller: viewModel.emailController,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
           focusColor: Colors.white,
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          fillColor: Colors.grey,
+          enabledBorder: border,
+          focusedBorder: border,
+          filled: true,
+          fillColor: Color.fromRGBO(196, 196, 196, 0.1),
           hintText: "Email",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w400),
+          hintStyle: style,
         ),
       ),
     );
@@ -121,11 +117,7 @@ class _LoginViewState extends BaseState<LoginView> {
       height: dynamicHeight(50),
       child: TextFormField(
         obscureText: viewModel.passwordVisible,
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.grey,
-          fontWeight: FontWeight.w600,
-        ),
+        style: style,
         controller: viewModel.passwordController,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: dynamicWidth(15), top: dynamicHeight(16)),
@@ -138,17 +130,12 @@ class _LoginViewState extends BaseState<LoginView> {
               onPressed: () {
                 viewModel.isLockStateChange();
               }),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xff2B44FF), width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          fillColor: Colors.grey,
+          enabledBorder: border,
+          focusedBorder: border,
+          filled: true,
+          fillColor: Color.fromRGBO(196, 196, 196, 0.1),
           hintText: "Password",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w400),
+          hintStyle: style,
         ),
       ),
     );
@@ -164,7 +151,7 @@ class _LoginViewState extends BaseState<LoginView> {
         },
         child: Text(
           widget.authentication == Authentication.LOGIN ? 'şifremi unuttum' : '',
-          style: TextStyle(fontSize: 14),
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, fontFamily: 'Gilroy'),
         ),
       ),
     );
@@ -175,20 +162,26 @@ class _LoginViewState extends BaseState<LoginView> {
       margin: EdgeInsets.only(left: dynamicWidth(235), top: dynamicHeight(20)),
       width: dynamicWidth(125),
       height: dynamicHeight(45),
-      child: ElevatedButton(
-        style: ButtonStyle(
-          textStyle: MaterialStateProperty.all(
-            const TextStyle(fontSize: 20),
-          ),
-          backgroundColor: MaterialStateProperty.all(
-            Color(0xff2B44FF),
-          ),
-        ),
-        child: Text(
-          widget.authentication == Authentication.LOGIN ? 'giriş yap' : 'kayıt ol',
-          style: TextStyle(color: Colors.white),
-        ),
+      child: CustomOutlineButton(
+        buttonColor: ColorSchemeDark.instance!.blue,
+        title: widget.authentication == Authentication.LOGIN ? 'giriş yap' : 'kayıt ol',
         onPressed: widget.authentication == Authentication.LOGIN ? viewModel.loginWithEmailAndPassword : viewModel.createUserWithEmailAndPassword,
+      ),
+    );
+  }
+
+  Widget buildTextAccount() {
+    return Container(
+      alignment: Alignment.center,
+      margin: EdgeInsets.only(top: dynamicHeight(150)),
+      child: InkWell(
+        onTap: () =>
+          NavigationService.instance.navigateToPageClear(path: NavigationConstants.LOGIN_VIEW, object: {'authentication': widget.authentication == Authentication.LOGIN ? Authentication.REGISTER : Authentication.LOGIN})
+        ,
+        child: Text(
+          widget.authentication == Authentication.LOGIN ? 'Hesabın Yok Mu? Kayıt Ol' : 'Hesabın Var Mı? Giriş Yap',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, fontFamily: 'Gilroy'),
+        ),
       ),
     );
   }

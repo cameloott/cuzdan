@@ -49,7 +49,7 @@ class _WelcomeViewState extends BaseState<WelcomeView> {
   Text buildText() {
     return Text(
       'kolay cüzdan yönetimi',
-      style: TextStyle(fontSize: 18),
+      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300, fontFamily: 'Gilroy'),
       textAlign: TextAlign.center,
     );
   }
@@ -57,17 +57,16 @@ class _WelcomeViewState extends BaseState<WelcomeView> {
   Container floatingButton() {
     return Container(
       margin: EdgeInsets.only(
-        bottom: dynamicHeight(50),
-        right: dynamicWidth(40),
+        bottom: dynamicHeight(80),
+        right: dynamicWidth(60),
       ),
-      height: 45,
+      height: 60,
       decoration: BoxDecoration(
         color: ColorSchemeDark.instance!.blue,
         shape: BoxShape.circle,
       ),
       child: IconButton(
-        onPressed: () =>
-            NavigationService.instance.navigateToPageClear(path: '/onboard'),
+        onPressed: () => NavigationService.instance.navigateToPageClear(path: '/onboard'),
         icon: Icon(
           Icons.arrow_forward_ios,
         ),

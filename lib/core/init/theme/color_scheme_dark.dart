@@ -11,4 +11,5 @@ class ColorSchemeDark {
 
   final Color blue = Color(0xff2B44FF);
   final Color bacground = Color(0xff111016);
+  final Color grey = Color(0xff666666);
 }

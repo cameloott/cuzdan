@@ -1,3 +1,4 @@
+import 'package:cuzdan/ui/add/view/add_view.dart';
 import 'package:cuzdan/ui/onboard/view/welcome_view.dart';
 
 import 'package:flutter/material.dart';
@@ -10,6 +11,6 @@ Widget initiator() {
     PreferencesManager.instance.setIntVal(PreferencesKeys.IS_FIRST_ENTRY, 0);
     return WelcomeView();
   } else {
-    return WelcomeView();
+    return AddView();
   }
 }

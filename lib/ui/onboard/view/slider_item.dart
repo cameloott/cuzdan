@@ -24,7 +24,7 @@ class SlideItem extends BaseStateless {
                 SizedBox(height: dynamicHeight(context, 50)),
                 Text(
                   model.onboardModelList![index].header,
-                  style: TextStyle(fontWeight: FontWeight.w600, letterSpacing: 1.3, fontSize: 40.0),
+                  style: TextStyle(fontSize: 44.0, fontFamily: 'Gilroy'),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -33,7 +33,7 @@ class SlideItem extends BaseStateless {
           Expanded(
             child: Text(
               model.onboardModelList![index].title + 'Lorem ipsum dolor sit amet, consec adipiscing elit. Accumsan in lorem. Accumsan in lorem.',
-              style: TextStyle(fontWeight: FontWeight.w600, letterSpacing: 1.0, height: 1.1, fontSize: 16.0),
+              style: TextStyle(fontWeight: FontWeight.w300, fontSize: 18.0, fontFamily: 'Gilroy'),
               textAlign: TextAlign.start,
             ),
           ),
