@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cuzdan/core/init/navigation/base_navigation_service.dart';
+import 'base_navigation_service.dart';
 
 class NavigationService implements BaseNavigationService {
   static NavigationService? _instance;
@@ -18,7 +18,9 @@ class NavigationService implements BaseNavigationService {
   }
 
   @override
-  Future<void> navigateToPageClear({required String path, Object? object}) async {
-    await navigatorKey.currentState!.pushNamedAndRemoveUntil(path, removeOldRoutes(), arguments: object);
+  Future<void> navigateToPageClear(
+      {required String path, Object? object}) async {
+    await navigatorKey.currentState!
+        .pushNamedAndRemoveUntil(path, removeOldRoutes(), arguments: object);
   }
 }
